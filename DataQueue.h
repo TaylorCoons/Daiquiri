@@ -16,6 +16,9 @@ private:
 	// END CONFIG VARS
 #include DataQueueConfig.h
 public:
+	/*
+	* DataQueue Constructor
+	*/
 	DataQueue();
 
 	/*
@@ -52,6 +55,9 @@ public:
 	*/
 	void clearQueue();
 
+	/*
+	* DataQueue Destructor
+	*/
 	~DataQueue();
 };
 
