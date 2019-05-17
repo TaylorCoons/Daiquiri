@@ -3,3 +3,4 @@ Debug
 
 *.vcxproj*
 
+__pycache__
