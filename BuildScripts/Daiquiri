@@ -6,8 +6,18 @@ import subprocess
 
 def test(args):
     print('Testing')
-    subprocess.call(['./TestAccumulatePlugins.py'])
-    subprocess.call(['./TestCheckActivePlugins.py'])
+    failures = 0
+    if subprocess.call(['./TestAccumulatePlugins.py']) != 0:
+        failures = failures + 1
+    if subprocess.call(['./TestCheckActivePlugins.py']) != 0:
+        failures = failures + 1
+    if subprocess.call(['./TestValidatePlugins.py']) != 0:
+        failures = failures + 1
+
+    if failures != 0:
+        print('{} modules failed'.format(failures))
+    else:
+        print('All modules passed') 
 
 
 def build(args):
