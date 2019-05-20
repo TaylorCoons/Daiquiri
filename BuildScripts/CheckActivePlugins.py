@@ -1,21 +1,9 @@
 #!/usr/bin/python3
 
-import argparse
 import os
 import re
 
 import GlobalDefines as GD 
-
-def parse_arguments():
-    parser = argparse.ArgumentParser()
-    defaultPath = os.path.join(GD.ROOT_DIR, GD.ACTIVE_PLUGINS_FILE)
-    parser.add_argument('--path', 
-                        nargs=1, 
-                        default=defaultPath, 
-                        help='Non-conventional path to active plugins file')
-    
-    args = parser.parse_args()
-    return args    
 
 def parse_active_plugins_file(activePluginsPath):
     activePlugins = open(activePluginsPath, 'r')
@@ -47,13 +35,15 @@ def parse_active_plugins_file(activePluginsPath):
 
 def main():
     print('Validating Active Plugins file')
-    args = parse_arguments() 
-    if not os.path.isfile(args.path):
+    
+    path = os.path.join(GD.ROOT_DIR, GD.ACTIVE_PLUGINS_FILE)
+
+    if not os.path.isfile(path):
         print('Failed to find active plugins file')
-        print('File does not exist at: ' + args.path)    
+        print('File does not exist at: ' + path)    
         return 1
 
-    if not parse_active_plugins_file(args.path):
+    if not parse_active_plugins_file(path):
         print('Failed to parse active plugins file')
         return 1
 
