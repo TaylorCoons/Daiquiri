@@ -4,18 +4,16 @@ import os
 import re
 import argparse
 
-import GlobalDefines as GD
 from AccumulatePlugins import accumulate_plugins
+from GlobalDefines import ENVIRON
 
-def validate_plugins(plugins):
+def validate_plugins(plugins, pluginDir):
     
     for plugin in plugins:
-        pluginConfig = os.path.join(GD.ROOT_DIR, 
-                                    GD.PLUGIN_DIR, 
+        pluginConfig = os.path.join(pluginDir,
                                     plugin, 
                                     plugin + 'Config.h')
-        pluginHeader = os.path.join(GD.ROOT_DIR, 
-                                    GD.PLUGIN_DIR, 
+        pluginHeader = os.path.join(pluginDir, 
                                     plugin, 
                                     plugin + '.h')
        
@@ -34,7 +32,9 @@ def validate_plugins(plugins):
 
 def main():
     print('Validating plugins')
-    plugins = accumulate_plugins()
+    pluginDir = os.path.join(ENVIRON['ROOT_DIR'], ENVIRON['PLUGIN_DIR'])
+    activePluginsPath = os.path.join(ENVIRON['ROOT_DIR'], ENVIRON['ACTIVE_PLUGINS_FILE'])
+    plugins = accumulate_plugins(activePluginsPath)
     if not validate_plugins(plugins):
         print('Failed to validate plugins')
         return 1

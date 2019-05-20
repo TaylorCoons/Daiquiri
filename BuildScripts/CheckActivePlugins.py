@@ -3,10 +3,15 @@
 import os
 import re
 
-import GlobalDefines as GD 
+from GlobalDefines import ENVIRON
 
 def parse_active_plugins_file(activePluginsPath):
-    activePlugins = open(activePluginsPath, 'r')
+    try:
+        activePlugins = open(activePluginsPath, 'r')
+    except FileNotFoundError as e:
+        print(e)
+        return False
+
     if not activePlugins:
         print('Failed to open active plugins file')
         print('Could not open: ' + activePluginsPath)
@@ -36,7 +41,8 @@ def parse_active_plugins_file(activePluginsPath):
 def main():
     print('Validating Active Plugins file')
     
-    path = os.path.join(GD.ROOT_DIR, GD.ACTIVE_PLUGINS_FILE)
+    path = os.path.join(ENVIRON['ROOT_DIR'], 
+                        ENVIRON['ACTIVE_PLUGINS_FILE'])
 
     if not os.path.isfile(path):
         print('Failed to find active plugins file')

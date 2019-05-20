@@ -3,12 +3,16 @@
 import os
 import re
 
-import GlobalDefines as GD
+from GlobalDefines import ENVIRON
 
-def accumulate_plugins():
-    activePluginsPath = os.path.join(GD.ROOT_DIR, GD.ACTIVE_PLUGINS_FILE)
-    activePluginsFile = open(activePluginsPath, 'r')
+def accumulate_plugins(activePluginsPath):
     
+    try:
+        activePluginsFile = open(activePluginsPath, 'r')
+    except FileNotFoundError as e:
+        print(e)
+        return []
+
     reEngine = re.compile('#include "(?P<plugin>.*)\.h"')
 
     plugins = []
@@ -24,4 +28,6 @@ def accumulate_plugins():
         if match is not None:
             plugins.append(match.group('plugin'))
         
+    activePluginsFile.close()
+
     return plugins

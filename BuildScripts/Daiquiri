@@ -4,10 +4,10 @@ import os
 import argparse
 import subprocess
 
-import GlobalDefines
-
 def test(args):
-    return
+    print('Testing')
+    subprocess.call(['./TestAccumulatePlugins.py'])
+    subprocess.call(['./TestCheckActivePlugins.py'])
 
 
 def build(args):
