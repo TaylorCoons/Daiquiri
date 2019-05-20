@@ -1,0 +1,42 @@
+#!/usr/bin/python3
+
+import os
+import argparse
+import subprocess
+
+import GlobalDefines
+
+def test(args):
+    return
+
+
+def build(args):
+    print('Building')
+    val = subprocess.call(['./CheckActivePlugins.py'])
+    if val != 0:
+        return
+    val = subprocess.call(['./ValidatePlugins.py'])
+    if val != 0:
+        return
+
+def parse_arguments():
+    parser = argparse.ArgumentParser()
+
+    subparsers = parser.add_subparsers(help='Subparsers: build, test')
+
+    buildParser = subparsers.add_parser('build', 
+                                        description='build the development environment')
+    buildParser.set_defaults(func=build)
+
+    testParser = subparsers.add_parser('test',
+                                        description='test the development environment')
+    testParser.set_defaults(func=test)
+
+    args = parser.parse_args()
+    args.func(args)
+
+def main():
+    parse_arguments()
+
+if __name__=='__main__':
+    main()
